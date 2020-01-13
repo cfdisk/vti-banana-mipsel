@@ -1,0 +1,26 @@
+name: CI
+on: [push]
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+
+    steps:
+    - uses: actions/checkout@v1
+    - name: make Packages
+      run: |
+        python ./CI/opkg-make-index ./ > Packages
+        rm -f Packages.gz
+        gzip Packages
+    - name: deploy
+      env:
+        USERNAME: ${{ secrets.USERNAME }}
+        MYPASSWD: ${{ secrets.MYPASSWD }}
+        FTPHOST: ${{ secrets.FTPHOST }}
+      run: |
+        echo "get ftp"
+        export DEBIAN_FRONTEND=noninteractive
+        echo "install ftp"
+        sudo apt-get install -yqq lftp
+        echo "ftping..."
+        lftp -e "set ftp:ssl-allow false; mirror -eRnv ./ /Plocki/repos/vti-banana-mipsel --ignore-time --parallel=10 --exclude-glob .git* --exclude .git/ --exclude scripts/ --exclude .github/" -u $USERNAME,$MYPASSWD $FTPHOST
