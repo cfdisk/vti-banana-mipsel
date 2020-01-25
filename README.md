@@ -8,5 +8,6 @@ Some extra/replacment packages for VTi
 - `opkg update`
 
 ## Packages
-Packages ares listes in Packages.gz
+Packages are listed in Packages.gz
+
 
