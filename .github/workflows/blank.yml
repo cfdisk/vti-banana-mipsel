@@ -17,10 +17,10 @@ jobs:
         USERNAME: ${{ secrets.USERNAME }}
         MYPASSWD: ${{ secrets.MYPASSWD }}
         FTPHOST: ${{ secrets.FTPHOST }}
-      run: |
-        echo "get ftp"
-        export DEBIAN_FRONTEND=noninteractive
-        echo "install ftp"
-        sudo apt-get install -yqq lftp
-        echo "ftping..."
-        lftp -e "set ftp:ssl-allow false; mirror -eRnv ./ /Plocki/repos/vti-banana-mipsel --ignore-time --parallel=10 --exclude-glob .git* --exclude .git/ --exclude CI/ --exclude .github/" -u $USERNAME,$MYPASSWD $FTPHOST
+#      run: |
+#        echo "get ftp"
+#        export DEBIAN_FRONTEND=noninteractive
+#        echo "install ftp"
+#        sudo apt-get install -yqq lftp
+#        echo "ftping..."
+#        lftp -e "set ftp:ssl-allow false; mirror -eRnv ./ /Plocki/repos/vti-banana-mipsel --ignore-time --parallel=10 --exclude-glob .git* --exclude .git/ --exclude CI/ --exclude .github/" -u $USERNAME,$MYPASSWD $FTPHOST
